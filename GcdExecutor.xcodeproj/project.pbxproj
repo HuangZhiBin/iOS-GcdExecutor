@@ -16,7 +16,7 @@
 
 /* Begin PBXFileReference section */
 		0279981CEE564F8267D2BCBF /* libPods-GcdDownload.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GcdDownload.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3408D19A21D729780038405D /* GcdDownload.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GcdDownload.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3408D19A21D729780038405D /* GcdExecutor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GcdExecutor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3408D19D21D729780038405D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3408D19F21D729780038405D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3408D1A421D729780038405D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,7 +41,7 @@
 		3408D19121D729780038405D = {
 			isa = PBXGroup;
 			children = (
-				3408D19C21D729780038405D /* GcdDownload */,
+				3408D19C21D729780038405D /* GcdExecutor */,
 				3408D19B21D729780038405D /* Products */,
 				AC7767A4F3AB4F4391F65E75 /* Pods */,
 				675233643C159AD6AF6EF7A0 /* Frameworks */,
@@ -51,29 +51,29 @@
 		3408D19B21D729780038405D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3408D19A21D729780038405D /* GcdDownload.app */,
+				3408D19A21D729780038405D /* GcdExecutor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3408D19C21D729780038405D /* GcdDownload */ = {
+		3408D19C21D729780038405D /* GcdExecutor */ = {
 			isa = PBXGroup;
 			children = (
-				3408D1AF21D72A390038405D /* Downloader */,
+				3408D1AF21D72A390038405D /* Gcd */,
 				3408D19D21D729780038405D /* AppDelegate.swift */,
 				3408D19F21D729780038405D /* ViewController.swift */,
 				3408D1A421D729780038405D /* Assets.xcassets */,
 				3408D1A621D729780038405D /* LaunchScreen.storyboard */,
 				3408D1A921D729780038405D /* Info.plist */,
 			);
-			path = GcdDownload;
+			path = GcdExecutor;
 			sourceTree = "<group>";
 		};
-		3408D1AF21D72A390038405D /* Downloader */ = {
+		3408D1AF21D72A390038405D /* Gcd */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Downloader;
+			path = Gcd;
 			sourceTree = "<group>";
 		};
 		675233643C159AD6AF6EF7A0 /* Frameworks */ = {
@@ -96,9 +96,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3408D19921D729780038405D /* GcdDownload */ = {
+		3408D19921D729780038405D /* GcdExecutor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3408D1AC21D729780038405D /* Build configuration list for PBXNativeTarget "GcdDownload" */;
+			buildConfigurationList = 3408D1AC21D729780038405D /* Build configuration list for PBXNativeTarget "GcdExecutor" */;
 			buildPhases = (
 				8290CEF16B3F6226FFA2F083 /* [CP] Check Pods Manifest.lock */,
 				3408D19621D729780038405D /* Sources */,
@@ -111,9 +111,9 @@
 			);
 			dependencies = (
 			);
-			name = GcdDownload;
+			name = GcdExecutor;
 			productName = GcdDownload;
-			productReference = 3408D19A21D729780038405D /* GcdDownload.app */;
+			productReference = 3408D19A21D729780038405D /* GcdExecutor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -132,7 +132,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3408D19521D729780038405D /* Build configuration list for PBXProject "GcdDownload" */;
+			buildConfigurationList = 3408D19521D729780038405D /* Build configuration list for PBXProject "GcdExecutor" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -145,7 +145,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3408D19921D729780038405D /* GcdDownload */,
+				3408D19921D729780038405D /* GcdExecutor */,
 			);
 		};
 /* End PBXProject section */
@@ -378,7 +378,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3408D19521D729780038405D /* Build configuration list for PBXProject "GcdDownload" */ = {
+		3408D19521D729780038405D /* Build configuration list for PBXProject "GcdExecutor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3408D1AA21D729780038405D /* Debug */,
@@ -387,7 +387,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3408D1AC21D729780038405D /* Build configuration list for PBXNativeTarget "GcdDownload" */ = {
+		3408D1AC21D729780038405D /* Build configuration list for PBXNativeTarget "GcdExecutor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3408D1AD21D729780038405D /* Debug */,
