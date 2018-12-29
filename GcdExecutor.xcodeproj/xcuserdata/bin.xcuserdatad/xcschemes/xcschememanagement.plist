@@ -9,6 +9,19 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>GcdExecutor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>3408D19921D729780038405D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

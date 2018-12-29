@@ -11,6 +11,12 @@
 		3408D1A021D729780038405D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3408D19F21D729780038405D /* ViewController.swift */; };
 		3408D1A521D729780038405D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3408D1A421D729780038405D /* Assets.xcassets */; };
 		3408D1A821D729780038405D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3408D1A621D729780038405D /* LaunchScreen.storyboard */; };
+		34544AB821D75B3700E4E776 /* DispatchAfterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34544AB721D75B3700E4E776 /* DispatchAfterViewController.swift */; };
+		34544ABA21D79EF300E4E776 /* DispatchGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34544AB921D79EF300E4E776 /* DispatchGroupViewController.swift */; };
+		34544ABC21D7ABC100E4E776 /* DispatchBarrierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34544ABB21D7ABC100E4E776 /* DispatchBarrierViewController.swift */; };
+		345E648B21D7369B00B34943 /* DispatchQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345E648A21D7369B00B34943 /* DispatchQueueViewController.swift */; };
+		345E648D21D7416700B34943 /* DispatchGlobalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345E648C21D7416700B34943 /* DispatchGlobalViewController.swift */; };
+		345E648F21D748A400B34943 /* DispatchTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345E648E21D748A400B34943 /* DispatchTargetViewController.swift */; };
 		966A7E4C76F56C9BBD4DC9C5 /* libPods-GcdDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0279981CEE564F8267D2BCBF /* libPods-GcdDownload.a */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +28,12 @@
 		3408D1A421D729780038405D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3408D1A721D729780038405D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3408D1A921D729780038405D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34544AB721D75B3700E4E776 /* DispatchAfterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchAfterViewController.swift; sourceTree = "<group>"; };
+		34544AB921D79EF300E4E776 /* DispatchGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchGroupViewController.swift; sourceTree = "<group>"; };
+		34544ABB21D7ABC100E4E776 /* DispatchBarrierViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchBarrierViewController.swift; sourceTree = "<group>"; };
+		345E648A21D7369B00B34943 /* DispatchQueueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueViewController.swift; sourceTree = "<group>"; };
+		345E648C21D7416700B34943 /* DispatchGlobalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchGlobalViewController.swift; sourceTree = "<group>"; };
+		345E648E21D748A400B34943 /* DispatchTargetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchTargetViewController.swift; sourceTree = "<group>"; };
 		43D536680A744C97055E9804 /* Pods-GcdDownload.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GcdDownload.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GcdDownload/Pods-GcdDownload.debug.xcconfig"; sourceTree = "<group>"; };
 		99B8A398B8C10BA6C487F134 /* Pods-GcdDownload.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GcdDownload.release.xcconfig"; path = "Pods/Target Support Files/Pods-GcdDownload/Pods-GcdDownload.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +84,12 @@
 		3408D1AF21D72A390038405D /* Gcd */ = {
 			isa = PBXGroup;
 			children = (
+				345E648A21D7369B00B34943 /* DispatchQueueViewController.swift */,
+				345E648C21D7416700B34943 /* DispatchGlobalViewController.swift */,
+				345E648E21D748A400B34943 /* DispatchTargetViewController.swift */,
+				34544AB721D75B3700E4E776 /* DispatchAfterViewController.swift */,
+				34544AB921D79EF300E4E776 /* DispatchGroupViewController.swift */,
+				34544ABB21D7ABC100E4E776 /* DispatchBarrierViewController.swift */,
 			);
 			path = Gcd;
 			sourceTree = "<group>";
@@ -215,7 +233,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				345E648F21D748A400B34943 /* DispatchTargetViewController.swift in Sources */,
 				3408D1A021D729780038405D /* ViewController.swift in Sources */,
+				345E648D21D7416700B34943 /* DispatchGlobalViewController.swift in Sources */,
+				34544AB821D75B3700E4E776 /* DispatchAfterViewController.swift in Sources */,
+				34544ABC21D7ABC100E4E776 /* DispatchBarrierViewController.swift in Sources */,
+				345E648B21D7369B00B34943 /* DispatchQueueViewController.swift in Sources */,
+				34544ABA21D79EF300E4E776 /* DispatchGroupViewController.swift in Sources */,
 				3408D19E21D729780038405D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,7 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 32YMLWPCBK;
-				INFOPLIST_FILE = GcdDownload/Info.plist;
+				INFOPLIST_FILE = GcdExecutor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techtcm.acup.gcd;
@@ -365,7 +389,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 32YMLWPCBK;
-				INFOPLIST_FILE = GcdDownload/Info.plist;
+				INFOPLIST_FILE = GcdExecutor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.techtcm.acup.gcd;
