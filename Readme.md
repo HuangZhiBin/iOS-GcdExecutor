@@ -1,7 +1,16 @@
 # GCD案例分析
-> 以Swift4实现GCD的9种经典案例
+以Swift4实现GCD的9种经典案例
+- 1.&nbsp;串行队列与并行队列
+- 2.&nbsp;main队列与global队列
+- 3.&nbsp;asyncAfter
+- 4.&nbsp;DispatchGroup
+- 5.&nbsp;barrier
+- 6.&nbsp;sync
+- 7.&nbsp;concurrentPerform
+- 8.&nbsp;suspend与resume
+- 9.&nbsp;Semaphore
 
-### 1.&nbsp;串行队列和并行队列
+### 1.&nbsp;串行队列与并行队列
 - **串行队列**(Serial Dispatch Queue)同时只能执行一个追加的任务(Block)
 - **并行队列**(Concurrent Dispatch Queue)同时执行多个追加的任务(Block)
 - 可自行创建串行队列和并行队列
