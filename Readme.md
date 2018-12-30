@@ -1,5 +1,5 @@
 # GCD案例分析
-> 以Swift4实现GCD的10种经典案例
+> 以Swift4实现GCD的9种经典案例
 
 ### 1.&nbsp;串行队列和并行队列
 - **串行队列**(Serial Dispatch Queue)同时只能执行一个追加的任务(Block)
@@ -490,6 +490,59 @@ concurrentQueue.resume()
 9: 当前线程的hash为106102874588224
 10: 当前线程的hash为105553118758528
 ```
+
+### 9.&nbsp;Semaphore
+#### DispatchSemaphoreViewController
+- Semaphore指旗语，表示一种计数的信号。当Semaphore的值大于0时，允许执行下面的代码。等于0则继续等待，直至Semaphore的值大于0时才“放行”。
+```swift
+        let semaphore = DispatchSemaphore(value: 1) //设置semaphore的初始量为1
+        let queue = DispatchQueue(label: "com.leo.concurrentQueue", qos: .default, attributes: .concurrent)
+        
+        queue.async {
+            //若semaphore>0继续执行，等于0则继续等待
+            semaphore.wait()
+            
+            //此时，semaphore的值减1
+            self.log("Start usb task1",Thread.current)
+            sleep(3)
+            self.log("End usb task1",Thread.current)
+            
+            semaphore.signal()
+            //此时，semaphore的值加1
+        }
+        
+        queue.async {
+            semaphore.wait()
+            
+            self.log("Start usb task2",Thread.current)
+            sleep(3)
+            self.log("End usb task2",Thread.current)
+            
+            semaphore.signal()
+        }
+        
+        queue.async {
+            semaphore.wait()
+            
+            self.log("Start usb task3",Thread.current)
+            sleep(3)
+            self.log("End usb task3",Thread.current)
+            
+            semaphore.signal()
+        }
+```
+执行结果：
+```swift
+Start task1: 当前线程的hash为106102874588672
+End task1: 当前线程的hash为106102874588672
+Start task3: 当前线程的hash为106102874573120
+End task3: 当前线程的hash为106102874573120
+Start task2: 当前线程的hash为105553118763456
+End task2: 当前线程的hash为105553118763456
+```
+结果分析
+- 1.&nbsp;semaphore的初始量为1，1个追加到队列的任务在semaphore.wait()时，检测到semaphore值大于0，放开执行，semaphore值减1(此时semaphore=0)。这时其他追加到队列的任务在semaphore.wait()时，由于semaphore值为0，需要继续等待，直到上面“放行”的任务执行完毕后，通过semaphore.signal()重新把semaphore值加1(此时semaphore=1)，让其他队列有机会继续执行
+- 2.semaphore能避免一次性执行多个async操作(例如10000个操作)时导致内存错误的问题
 
 | Item      | Value |
 | --------- | -----:|

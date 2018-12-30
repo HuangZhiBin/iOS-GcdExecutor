@@ -72,9 +72,9 @@ class DispatchSemaphoreViewController: UIViewController {
             semaphore.wait()
             
             //此时，semaphore--
-            self.log("Start usb task1",Thread.current)
+            self.log("Start task1",Thread.current)
             sleep(3)
-            self.log("End usb task1",Thread.current)
+            self.log("End task1",Thread.current)
             
             semaphore.signal()
             //此时，semaphore++
@@ -83,9 +83,9 @@ class DispatchSemaphoreViewController: UIViewController {
         queue.async {
             semaphore.wait()
             
-            self.log("Start usb task2",Thread.current)
+            self.log("Start task2",Thread.current)
             sleep(3)
-            self.log("End usb task2",Thread.current)
+            self.log("End task2",Thread.current)
             
             semaphore.signal()
         }
@@ -93,9 +93,9 @@ class DispatchSemaphoreViewController: UIViewController {
         queue.async {
             semaphore.wait()
             
-            self.log("Start usb task3",Thread.current)
+            self.log("Start task3",Thread.current)
             sleep(3)
-            self.log("End usb task3",Thread.current)
+            self.log("End task3",Thread.current)
             
             semaphore.signal()
         }
