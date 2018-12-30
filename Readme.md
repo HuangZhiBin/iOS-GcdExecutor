@@ -5,7 +5,7 @@
 - 3.&nbsp;asyncAfter
 - 4.&nbsp;DispatchGroup
 - 5.&nbsp;barrier
-- 6.&nbsp;sync
+- 6.&nbsp;sync与死锁
 - 7.&nbsp;concurrentPerform
 - 8.&nbsp;suspend与resume
 - 9.&nbsp;Semaphore
@@ -369,7 +369,7 @@ still doing stuffs after 1 second: 当前线程的hash为105553116718016
 ```
 barrier追加到队列后，会等待并行执行的任务全部处理完成，然后才会处理barrier的任务。此时同时间只能执行barrier的任务，barrier的任务处理结束后，才会执行后面的并行执行的任务。保证了在数据修改的操作时，并行操作只有一个。
 
-### 6.&nbsp;sync
+### 6.&nbsp;sync与死锁
 #### DispatchSyncViewController
 - GCD的**sync**将指定的block**同步**追加到指定的队列
 ```swift
