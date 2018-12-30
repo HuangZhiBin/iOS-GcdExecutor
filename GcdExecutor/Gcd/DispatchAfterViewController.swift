@@ -69,7 +69,7 @@ class DispatchAfterViewController: UIViewController {
             self.log("这是3秒后执行的语句", Thread.current);
         }
         
-        //精确的3秒时间
+        //比上面精确的3秒时间
         DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 2.0, execute: {
             // your code here
             self.log("精确的3秒后执行的语句", Thread.current);

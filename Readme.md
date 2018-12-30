@@ -64,16 +64,18 @@
 > `追加`和`执行`是两个不同的概念，在并行队列中，先追加的任务不代表先执行
 
 ### 2.&nbsp;main队列(Main Dispatch Queue)和global队列(Global Dispatch Queue)
+
 - **main队列**和**global队列**是系统标准提供的队列，即全局队列
 - **main队列**(Main Dispatch Queue)是在主线程RunLoop中执行的队列，属于串行队列
 - **global队列**(Global Dispatch Queue)是所有应用程序都能使用的并行队列，在swift中有6个执行优先级
-    - 1.userInteractive&nbsp;(优先级最高)
-    - 2.userInitiated(优先级第2高)
-    - 3.default(优先级第3高)
-    - 4.utility(优先级第4高)
-    - 5.background(优先级最低)
-    - 6.unspecified&nbsp;(未指定优先级)
+    - 1.**userInteractive**&nbsp;(优先级最高)
+    - 2.**userInitiated**(优先级第2高)
+    - 3.**default**(优先级第3高)
+    - 4.**utility**(优先级第4高)
+    - 5.**background**(优先级最低)
+    - 6.**unspecified**&nbsp;(未指定优先级)
 代码： global队列指定优先级，分析任务的执行顺序
+#### DispatchGlobalViewController
 ```swift
         DispatchQueue.global(qos: .background).async {
             self.log("background任务", Thread.current);
@@ -114,6 +116,42 @@ background任务: 当前线程的hash为106102874588096
 - 2.&nbsp;global队列虽能指定任务执行的优先级，但不能保证实时性，因此执行顺序也只能是大致的判断，因此上面的代码执行的结果不一定是userInteractive->userInitiated->default->utility->background
 > 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
 
+### 3.&nbsp;asyncAfter
+
+- **asyncAfter**能完成想在指定时间后执行处理
+- **asyncAfter**在指定时间后追加处理到指定的queue，而不是在指定时间后执行处理
+    - 例如下面代码的执行时间实际上会大于3秒
+```swift
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+            self.log("这是3秒后执行的语句", Thread.current);
+        }
+```
+- **DispatchTime**和**DispatchWallTime**的区别
+    - DispatchTime为毫秒级，通常用于计算相对时间，例如3秒后
+    - DispatchWallTime为微毫秒级，通常用于计算绝对时间，例如2019年1月1日 00:00:000
+    - DispatchWallTime的精确度明显高于DispatchTime
+        
+#### DispatchAfterViewController
+```swift
+        //3秒后添加到main线程，而不是3秒后执行，实际执行时间最少3秒
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+            // your code here
+            self.log("这是3秒后执行的语句", Thread.current);
+        }
+        
+        //比上面精确的3秒时间
+        DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 2.0, execute: {
+            // your code here
+            self.log("精确的3秒后执行的语句", Thread.current);
+        });
+```
+
+- 1.&nbsp;执行结果
+```swift
+精确的3秒后执行的语句: 当前线程的hash为105553116718016
+这是3秒后执行的语句: 当前线程的hash为105553116718016
+```
+- 2.&nbsp;相同时间间隔内指定DispatchWallTime的任务先于DispatchTime执行
 
 | Item      | Value |
 | --------- | -----:|
