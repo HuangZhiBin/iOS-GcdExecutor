@@ -444,11 +444,11 @@ concurrentQueue is all work done: 当前线程的hash为105553118770624
 #### DispatchSuspendViewController
 - suspend挂起指定的队列
 ```swift
-        queue.suspend()
+queue.suspend()
 ```
 - resume恢复指定的队列
 ```swift
-        queue.resume()
+queue.resume()
 ```
 - suspend对队列已经追加的处理不受影响，挂起后追加到队列的处理会停止执行。直至resume后，这些操作才可以继续执行。
 ```swift
@@ -480,7 +480,7 @@ concurrentQueue is all work done: 当前线程的hash为105553118770624
 - 1.&nbsp;suspend后追加的第6-10个处理不会执行，因为队列已经挂起，但之前的追加的第1-5个处理不受影响，正常执行
 - 2.此时尝试执行下面的代码，队列通过resume()恢复了，继续执行第6-10个处理
 ```swift
-        concurrentQueue.resume()
+concurrentQueue.resume()
 ```
 执行结果：
 ```swift
