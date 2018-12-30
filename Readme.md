@@ -494,6 +494,7 @@ concurrentQueue.resume()
 ### 9.&nbsp;Semaphore
 #### DispatchSemaphoreViewController
 - Semaphore指旗语，表示一种计数的信号。当Semaphore的值大于0时，允许执行下面的代码。等于0则继续等待，直至Semaphore的值大于0时才“放行”。
+执行代码：
 ```swift
         let semaphore = DispatchSemaphore(value: 1) //设置semaphore的初始量为1
         let queue = DispatchQueue(label: "com.leo.concurrentQueue", qos: .default, attributes: .concurrent)
