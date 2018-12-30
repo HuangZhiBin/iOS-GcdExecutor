@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     lazy var btn : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 100, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 100-20, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("Serial Queue 与 Concurrent Queue", for: .normal);
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     
     lazy var btn2 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 160, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 160-20, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("系统级Global Queue", for: .normal);
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     
     lazy var btn3 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 220, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 220-20, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("修改Queue执行的优先级", for: .normal);
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     
     lazy var btn4 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 280, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 280-20-60, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("延迟执行", for: .normal);
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
     
     lazy var btn5 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 340, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 340-20-60, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
         btn.setTitle("DispatchGroup", for: .normal);
@@ -72,10 +72,58 @@ class ViewController: UIViewController {
     
     lazy var btn6 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 400, width: 320, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 400-20-60, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
-        btn.setTitle("Barrier数据一致", for: .normal);
+        btn.setTitle("Sync同步", for: .normal);
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.setTitleColor(UIColor.white, for: .normal);
+        btn.backgroundColor = UIColor.blue;
+        return btn;
+    }();
+    
+    lazy var btn7 : UIButton! = {
+        let btn : UIButton = UIButton.init(type: .system);
+        btn.frame = CGRect.init(x: 10, y: 460-20-60, width: 320, height: 50);
+        btn.layer.masksToBounds = true;
+        btn.layer.cornerRadius = 3;
+        btn.setTitle("Sync同步", for: .normal);
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.setTitleColor(UIColor.white, for: .normal);
+        btn.backgroundColor = UIColor.blue;
+        return btn;
+    }();
+    
+    lazy var btn8 : UIButton! = {
+        let btn : UIButton = UIButton.init(type: .system);
+        btn.frame = CGRect.init(x: 10, y: 520-20-60, width: 320, height: 50);
+        btn.layer.masksToBounds = true;
+        btn.layer.cornerRadius = 3;
+        btn.setTitle("Apply执行多次任务", for: .normal);
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.setTitleColor(UIColor.white, for: .normal);
+        btn.backgroundColor = UIColor.blue;
+        return btn;
+    }();
+    
+    lazy var btn9 : UIButton! = {
+        let btn : UIButton = UIButton.init(type: .system);
+        btn.frame = CGRect.init(x: 10, y: 580-20-60, width: 320, height: 50);
+        btn.layer.masksToBounds = true;
+        btn.layer.cornerRadius = 3;
+        btn.setTitle("suspend任务", for: .normal);
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.setTitleColor(UIColor.white, for: .normal);
+        btn.backgroundColor = UIColor.blue;
+        return btn;
+    }();
+    
+    lazy var btn10 : UIButton! = {
+        let btn : UIButton = UIButton.init(type: .system);
+        btn.frame = CGRect.init(x: 10, y: 640-20-60, width: 320, height: 50);
+        btn.layer.masksToBounds = true;
+        btn.layer.cornerRadius = 3;
+        btn.setTitle("semaphore信号", for: .normal);
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         btn.setTitleColor(UIColor.white, for: .normal);
         btn.backgroundColor = UIColor.blue;
@@ -106,6 +154,18 @@ class ViewController: UIViewController {
         
         self.view.addSubview(self.btn6);
         self.btn6.addTarget(self, action: #selector(self.actions(_:)), for: .touchUpInside);
+        
+        self.view.addSubview(self.btn7);
+        self.btn7.addTarget(self, action: #selector(self.actions(_:)), for: .touchUpInside);
+        
+        self.view.addSubview(self.btn8);
+        self.btn8.addTarget(self, action: #selector(self.actions(_:)), for: .touchUpInside);
+        
+        self.view.addSubview(self.btn9);
+        self.btn9.addTarget(self, action: #selector(self.actions(_:)), for: .touchUpInside);
+        
+        self.view.addSubview(self.btn10);
+        self.btn10.addTarget(self, action: #selector(self.actions(_:)), for: .touchUpInside);
     }
     
     @objc func actions(_ btn : UIButton){
@@ -131,6 +191,22 @@ class ViewController: UIViewController {
         }
         else if(btn == self.btn6){
             let vc = DispatchBarrierViewController();
+            self.show(vc, sender: nil);
+        }
+        else if(btn == self.btn7){
+            let vc = DispatchSyncViewController();
+            self.show(vc, sender: nil);
+        }
+        else if(btn == self.btn8){
+            let vc = DispatchApplyViewController();
+            self.show(vc, sender: nil);
+        }
+        else if(btn == self.btn9){
+            let vc = DispatchSuspendViewController();
+            self.show(vc, sender: nil);
+        }
+        else if(btn == self.btn10){
+            let vc = DispatchSemaphoreViewController();
             self.show(vc, sender: nil);
         }
     }

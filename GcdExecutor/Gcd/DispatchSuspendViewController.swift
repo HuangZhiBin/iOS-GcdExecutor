@@ -1,5 +1,5 @@
 //
-//  DispatchQueueViewController.swift
+//  DispatchGlobalViewController.swift
 //  GcdExecutor
 //
 //  Created by bin on 2018/12/29.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class DispatchQueueViewController: UIViewController {
+class DispatchSuspendViewController: UIViewController {
     
     lazy var label : UILabel! = {
-        let label = UILabel.init(frame: CGRect.init(x: 10, y: 140, width: 320, height: 500));
+        let label = UILabel.init(frame: CGRect.init(x: 10, y: 130, width: 320, height: 500));
         label.numberOfLines = 0;
         label.font = UIFont.systemFont(ofSize: 14);
         label.textColor = UIColor.black
@@ -22,10 +22,10 @@ class DispatchQueueViewController: UIViewController {
     
     lazy var btn : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 10, y: 70, width: 120, height: 50);
+        btn.frame = CGRect.init(x: 10, y: 70, width: 100, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
-        btn.setTitle("执行serial", for: .normal);
+        btn.setTitle("执行queue", for: .normal);
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         btn.setTitleColor(UIColor.white, for: .normal);
         btn.backgroundColor = UIColor.blue;
@@ -34,44 +34,65 @@ class DispatchQueueViewController: UIViewController {
     
     lazy var btn2 : UIButton! = {
         let btn : UIButton = UIButton.init(type: .system);
-        btn.frame = CGRect.init(x: 150, y: 70, width: 120, height: 50);
+        btn.frame = CGRect.init(x: 120, y: 70, width: 100, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
-        btn.setTitle("执行concurrent", for: .normal);
+        btn.setTitle("suspend", for: .normal);
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         btn.setTitleColor(UIColor.white, for: .normal);
         btn.backgroundColor = UIColor.blue;
         return btn;
     }();
-
+    
+    lazy var btn3 : UIButton! = {
+        let btn : UIButton = UIButton.init(type: .system);
+        btn.frame = CGRect.init(x: 230, y: 70, width: 100, height: 50);
+        btn.layer.masksToBounds = true;
+        btn.layer.cornerRadius = 3;
+        btn.setTitle("resume", for: .normal);
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        btn.setTitleColor(UIColor.white, for: .normal);
+        btn.backgroundColor = UIColor.blue;
+        return btn;
+    }();
+    
     override func viewDidLoad() {
-        super.viewDidLoad();
-        
-        self.title = "Serial Queue 与 Concurrent Queue";
-        
+        super.viewDidLoad()
+
+        self.title = "Apply";
         self.view.backgroundColor = UIColor.white;
-        // Do any additional setup after loading the view.
         
         self.view.addSubview(self.label);
         self.view.addSubview(self.btn);
         self.view.addSubview(self.btn2);
+        self.view.addSubview(self.btn3);
         self.btn.addTarget(self, action: #selector(self.execAction(_:)), for: .touchUpInside);
         self.btn2.addTarget(self, action: #selector(self.execAction(_:)), for: .touchUpInside);
+        self.btn3.addTarget(self, action: #selector(self.execAction(_:)), for: .touchUpInside);
     }
     
     @objc func execAction(_ btn : UIButton){
-        self.label.text = "在这里显示运行结果:";
+        
         if(btn == self.btn){
-            self.executeSerialQueue();
+            self.label.text = "在这里显示运行结果:";
+            self.executeSync1();
         }
         else if(btn == self.btn2){
-            self.executeConcurrentQueue();
+            self.label.text = "will suspend";
+            self.executeSync2();
+        }
+        else if(btn == self.btn3){
+            self.label.text = "will resume";
+            self.executeSync3();
         }
     }
     
     func log(_ text : String,_ thread : Thread){
         print(text + ": \(thread)")
         DispatchQueue.main.async {
+            if((self.label.text! as NSString).length >= 100){
+                self.label.text = "在这里显示运行结果:";
+            }
             self.label.text = self.label.text! + "\n" + text;
             self.label.sizeToFit();
             var newframe = self.label.frame;
@@ -80,40 +101,33 @@ class DispatchQueueViewController: UIViewController {
         }
     }
     
-    func executeConcurrentQueue(){
-        let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
-        
-        concurrentQueue.async {
-            self.log("并行队列中同步执行的第1个任务", Thread.current);
-            sleep(4);
+    var concurrentQueue : DispatchQueue! = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+    
+    func executeSync1(){
+        for index in 0...50{
+            concurrentQueue.async {
+                self.log("\(index)", Thread.current);
+                sleep(2)
+            }
         }
         
-        concurrentQueue.async {
-            self.log("并行队列中同步执行的第2个任务", Thread.current);
-            sleep(2)
-        }
+    }
+    
+    func executeSync2(){
         
-        concurrentQueue.async {
-            self.log("并行队列中同步执行的第3个任务", Thread.current);
+        concurrentQueue.suspend()
+        for index in 51...100{
+            concurrentQueue.async {
+                self.log("\(index)", Thread.current);
+                sleep(2)
+            }
         }
     }
     
-    func executeSerialQueue(){
-        let serialQueue = DispatchQueue(label: "com.dianbo.serialQueue");
+    func executeSync3(){
         
-        serialQueue.async {
-            self.log("串行队列中同步执行的第1个任务", Thread.current);
-            sleep(4)
-        }
+        concurrentQueue.resume()
         
-        serialQueue.async {
-            self.log("串行队列中同步执行的第2个任务", Thread.current);
-            sleep(2)
-        }
-        
-        serialQueue.async {
-            self.log("串行队列中同步执行的第3个任务", Thread.current);
-        }
     }
 
     override func didReceiveMemoryWarning() {

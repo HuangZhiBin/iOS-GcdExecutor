@@ -143,7 +143,7 @@ class DispatchGroupViewController: UIViewController {
             self.log("并行队列中同步执行的第3个任务", Thread.current);
         }
         
-        group.wait(timeout: DispatchTime.distantFuture);//同步一直等待,当前线程停止
+        group.wait();//同步一直等待,当前线程停止
         self.log("done doing all stuffs", Thread.current);
     }
     
