@@ -542,7 +542,8 @@ End task2: 当前线程的hash为105553118763456
 ```
 结果分析
 - 1.&nbsp;semaphore的初始量为1，1个追加到队列的任务在semaphore.wait()时，检测到semaphore值大于0，放开执行，semaphore值减1(此时semaphore=0)。这时其他追加到队列的任务在semaphore.wait()时，由于semaphore值为0，需要继续等待，直到上面“放行”的任务执行完毕后，通过semaphore.signal()重新把semaphore值加1(此时semaphore=1)，让其他队列有机会继续执行
-- 2.semaphore能避免一次性执行多个async操作(例如10000个操作)时导致内存错误的问题
+- 2.将semaphore的初始量设置为3,可以让同时放行的操作的数量变为3个，以此类推
+- 3.semaphore能避免一次性执行多个async操作(例如10000个操作)时导致内存错误的问题
 
 | Item      | Value |
 | --------- | -----:|
