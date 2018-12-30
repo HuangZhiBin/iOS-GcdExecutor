@@ -1,4 +1,4 @@
-# GCD例子
+# GCD案例分析
 > 以Swift4实现GCD的各种例子
 ### 1.&nbsp;串行队列(Serial Dispatch Queue)和并行队列(Concurrent Dispatch Queue)
 - **串行队列**(Serial Dispatch Queue)同时只能执行一个追加的任务(Block)
@@ -116,12 +116,12 @@ unspecified任务: 当前线程的hash为106102874582784
 utility任务: 当前线程的hash为105553118758848
 background任务: 当前线程的hash为106102874588096
 ```
-- 2.&nbsp;global队列虽能指定任务执行的优先级，但不能保证实时性，因此执行顺序也只能是大致的判断，因此上面的代码执行的结果不一定是userInteractive->userInitiated->default->utility->background
+- 2.&nbsp;global队列虽能指定任务执行的优先级，但不能保证实时性，因此执行顺序也只能是大致的判断。上面的代码执行的结果不一定是userInteractive->userInitiated->default->utility->background
 
 
 ### 3.&nbsp;asyncAfter
 
-- **asyncAfter**能完成想在指定时间后执行处理
+- **asyncAfter**能完成在指定时间后执行某些处理
 - **asyncAfter**在指定时间后追加处理到指定的queue，而不是在指定时间后执行处理
     - 例如下面代码的执行时间实际上会大于3秒
 ```swift
@@ -155,6 +155,103 @@ background任务: 当前线程的hash为106102874588096
 这是3秒后执行的语句: 当前线程的hash为105553116718016
 ```
 - 2.&nbsp;相同时间间隔内指定DispatchWallTime的任务先于DispatchTime执行
+
+### 4.&nbsp;DispatchGroup
+
+- **DispatchGroup**检查队列的所有任务是否执行结束，可以使用DispatchGroup
+```swift
+        let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        
+        let group = DispatchGroup.init();
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第1个任务", Thread.current);
+            sleep(4);
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第2个任务", Thread.current);
+            sleep(2)
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第3个任务", Thread.current);
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
+            self.log("done doing all stuff", Thread.current);
+        }
+```
+    - 执行结果
+```swift
+并行队列中同步执行的第1个任务: 当前线程的hash为106102874590080
+并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
+并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
+done doing all stuff: 当前线程的hash为105553116718016
+```
+- DispatchGroup的**wait()**也可以检查队列的所有任务是否执行结束，但是会导致当前线程停止，直到所有任务执行结束
+```swift
+let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        
+        let group = DispatchGroup.init();
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第1个任务", Thread.current);
+            sleep(4);
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第2个任务", Thread.current);
+            sleep(2)
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第3个任务", Thread.current);
+        }
+        
+        group.wait();//同步一直等待,当前线程停止
+        self.log("done doing all stuffs", Thread.current);
+```    
+    - 执行结果
+```swift
+并行队列中同步执行的第1个任务: 当前线程的hash为106102874590080
+并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
+并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
+done doing all stuff: 当前线程的hash为105553116718016
+    - 检查1秒后队列是否执行结束
+```swift
+let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        
+        let group = DispatchGroup.init();
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第1个任务", Thread.current);
+            sleep(4);
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第2个任务", Thread.current);
+            sleep(2)
+        }
+        
+        concurrentQueue.async(group: group) {
+            self.log("并行队列中同步执行的第3个任务", Thread.current);
+        }
+        
+        let result = group.wait(timeout: DispatchTime.now() + 1.00);//同步一直等待
+        if(result == .success){
+            self.log("done doing all stuffs after 1 second", Thread.current);
+        }
+        else{
+            self.log("still doing stuffs after 1 second", Thread.current);
+        }
+```   
+    - 执行结果
+```swift
+并行队列中同步执行的第1个任务: 当前线程的hash为106102874590080
+并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
+并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
+done doing all stuffs after 1 second: 当前线程的hash为105553116718016
 
 | Item      | Value |
 | --------- | -----:|
