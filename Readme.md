@@ -189,9 +189,9 @@ background任务: 当前线程的hash为106102874588096
 并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
 done doing all stuff: 当前线程的hash为105553116718016
 ```
-- DispatchGroup的**wait()**也可以检查队列的所有任务是否执行结束，但是会导致当前线程停止，直到所有任务执行结束
+- DispatchGroup的**wait**也可以检查队列的所有任务是否执行结束，但是会导致当前线程停止，直到所有任务执行结束
 ```swift
-let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
         
         let group = DispatchGroup.init();
         
@@ -218,7 +218,7 @@ let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attribu
 并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
 并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
 done doing all stuff: 当前线程的hash为105553116718016
-检查1秒后队列是否执行结束
+- 检查1秒后队列是否执行结束
 ```swift
 let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
         
@@ -246,7 +246,7 @@ let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attribu
             self.log("still doing stuffs after 1 second", Thread.current);
         }
 ```   
-- 执行结果
+执行结果：
 ```swift
 并行队列中同步执行的第1个任务: 当前线程的hash为106102874590080
 并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
