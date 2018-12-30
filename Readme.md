@@ -376,6 +376,11 @@ barrier追加到队列后，会等待并行执行的任务全部处理完成，�
 globalQueue.sync: 当前线程的hash为105553116670464
 globalQueue.async: 当前线程的hash为106102872585920
 ```
+或者
+```swift
+globalQueue.async: 当前线程的hash为105553116670464
+globalQueue.sync: 当前线程的hash为106102872585920
+```
 从执行结果可以看到，顺序是sync->async,或者是async->sync,虽然async的追加顺序先于sync，但其执行顺序不定，可能先于sync也可能晚于sync。
 - sync同步操作引发“死锁”的情况
 ```swift
