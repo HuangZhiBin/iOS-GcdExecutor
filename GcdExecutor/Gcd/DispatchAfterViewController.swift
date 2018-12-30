@@ -52,7 +52,7 @@ class DispatchAfterViewController: UIViewController {
     }
     
     func log(_ text : String,_ thread : Thread){
-        print(text + ": \(thread)")
+        print(text + ": 当前线程的hash为\(thread.hash)")
         DispatchQueue.main.async {
             self.label.text = self.label.text! + "\n" + text;
             self.label.sizeToFit();

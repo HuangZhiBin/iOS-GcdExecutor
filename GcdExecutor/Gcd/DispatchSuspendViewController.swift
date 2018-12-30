@@ -88,7 +88,7 @@ class DispatchSuspendViewController: UIViewController {
     }
     
     func log(_ text : String,_ thread : Thread){
-        print(text + ": \(thread)")
+        print(text + ": 当前线程的hash为\(thread.hash)")
         DispatchQueue.main.async {
             if((self.label.text! as NSString).length >= 100){
                 self.label.text = "在这里显示运行结果:";
