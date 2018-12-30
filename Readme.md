@@ -75,8 +75,8 @@
     - 5.**background**(优先级最低)
     - 6.**unspecified**&nbsp;(未指定优先级)
 
-    > 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
-    
+> 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
+
 代码： global队列指定优先级，分析任务的执行顺序
 #### DispatchGlobalViewController
 ```swift
