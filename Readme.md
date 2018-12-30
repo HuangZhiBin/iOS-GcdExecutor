@@ -391,6 +391,7 @@ globalQueue.sync: 当前线程的hash为106102872585920
 ```
 从执行结果可以看到，程序发生死锁而发生异常。原因在于：main队列在等待sync追加block操作的结束，但是main队列正在执行这些代码，因此sync的block始终无法追加到main队列。
 > main队列属于串行队列，自定义的串行队列追加sync同步操作同样会引发“死锁”
+
 sync同步操作即使发生在async中，也会因为程序无法继续执行，出现“死锁”：
 ```swift
         let mainQueue = DispatchQueue.main
