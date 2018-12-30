@@ -218,6 +218,7 @@ done doing all stuff: 当前线程的hash为105553116718016
 并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
 并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
 done doing all stuff: 当前线程的hash为105553116718016
+``` 
 - 检查1秒后队列是否执行结束
 ```swift
 let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
