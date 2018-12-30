@@ -11,11 +11,11 @@
 - 9.&nbsp;Semaphore
 
 ### 1.&nbsp;串行队列与并行队列
-- **串行队列**(Serial Dispatch Queue)同时只能执行一个追加的任务(Block)
-- **并行队列**(Concurrent Dispatch Queue)同时执行多个追加的任务(Block)
+#### DispatchQueueViewController
+- **串行队列**(Serial Dispatch Queue)：同时只能执行一个追加的任务(Block)
+- **并行队列**(Concurrent Dispatch Queue)：同时执行多个追加的任务(Block)
 - 可自行创建串行队列和并行队列
 
-#### DispatchQueueViewController
 #### （1）串行队列
 代码：创建串行队列，执行追加的任务，分析执行顺序
 ```swift
@@ -70,11 +70,11 @@
 并行队列中同步执行的第1个任务: 当前线程的hash为105553118840576
 并行队列中同步执行的第3个任务: 当前线程的hash为105553116786816
 ```
-- 3.&nbsp;可以看到执行顺序不定(多次几次),可能是1->2->3，也可能是2->1->3。虽然追加的任务顺序是1->2->3，但在并行队列中，追加的所有任务执行顺序不定。并且不同任务在执行时，所在的线程不为同一个
+- 3.&nbsp;可以看到执行顺序不定(多试几次),可能是1->2->3，也可能是2->1->3，或者是其他的情况。虽然追加的任务顺序是1->2->3，但在并行队列中，追加的所有任务执行顺序不定。并且不同任务在执行时，所在的线程不为同一个
 > `追加`和`执行`是两个不同的概念，在并行队列中，先追加的任务不代表先执行
 
 ### 2.&nbsp;main队列和global队列
-
+#### DispatchGlobalViewController
 - **main队列**和**global队列**是系统标准提供的队列，即全局队列
 - **main队列**(Main Dispatch Queue)是在主线程RunLoop中执行的队列，属于串行队列
 - **global队列**(Global Dispatch Queue)是所有应用程序都能使用的并行队列，在swift中有6个执行优先级
@@ -85,10 +85,10 @@
     - 5.**background**(优先级最低)
     - 6.**unspecified**&nbsp;(未指定优先级)
 
-> 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
+> 自行创建串行队列和并行队列的优先级与global队列的default优先级相同
 
 代码： global队列指定优先级，分析任务的执行顺序
-#### DispatchGlobalViewController
+
 ```swift
         DispatchQueue.global(qos: .background).async {
             self.log("background任务", Thread.current);
@@ -130,7 +130,7 @@ background任务: 当前线程的hash为106102874588096
 
 
 ### 3.&nbsp;asyncAfter
-
+#### DispatchAfterViewController
 - **asyncAfter**能完成在指定时间后执行某些处理
 - **asyncAfter**在指定时间后追加处理到指定的queue，而不是在指定时间后执行处理
     - 例如下面代码的执行时间实际上会大于3秒
@@ -144,7 +144,7 @@ background任务: 当前线程的hash为106102874588096
     - DispatchWallTime为微毫秒级，通常用于计算绝对时间，例如2019年1月1日 00:00:000
     - DispatchWallTime的精确度明显高于DispatchTime
         
-#### DispatchAfterViewController
+
 ```swift
         //3秒后添加到main线程，而不是3秒后执行，实际执行时间最少3秒
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
