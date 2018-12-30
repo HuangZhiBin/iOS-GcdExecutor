@@ -7,7 +7,7 @@
 
 #### DispatchQueueViewController
 #### 串行队列
-创建串行队列，执行追加的任务
+代码：创建串行队列，执行追加的任务，分析执行顺序
 ```swift
         let serialQueue = DispatchQueue(label: "com.dianbo.serialQueue");//队列名称的前缀推荐使用应用程序ID,不指定第二个DispatchQueue()参数,创建的queue将默认为serialQueue
         
@@ -34,7 +34,7 @@
 ```
 - 3.&nbsp;可以看到执行顺序一定是1->2->3，并且为同一个线程
 #### 并行队列
-代码：创建并行队列，执行追加的任务
+代码：创建并行队列，执行追加的任务，分析执行顺序
 ```swift
         let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
         
