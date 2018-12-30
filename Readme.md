@@ -416,7 +416,7 @@ sync同步操作即使发生在async中，也会因为程序无法继续执行�
             self.log("concurrentQueue is all work done", Thread.current);
         }
 ```
-    - 执行结果：(建议多次测试)
+执行结果：(建议多次测试)
 ```swift
 2: 当前线程的hash为105553118785216
 1: 当前线程的hash为105553118770048
@@ -435,9 +435,9 @@ sync同步操作即使发生在async中，也会因为程序无法继续执行�
 12: 当前线程的hash为105553118770048
 concurrentQueue is all work done: 当前线程的hash为105553118770624
 ```
-    - 分析结果
-        - 从执行结果可以看到，10次追加到串行队列的block的执行顺序不定的，但执行结束后一定会输出`concurrentQueue is all work done`
-        - concurrentPerform会一直等待全部执行结束，因此建议在async中处理
+结果分析
+    1.&nbsp;从执行结果可以看到，10次追加到串行队列的block的执行顺序不定的，但执行结束后一定会输出`concurrentQueue is all work done`
+    2.&nbsp;concurrentPerform会一直等待全部执行结束，因此建议在async中处理
 
 | Item      | Value |
 | --------- | -----:|
