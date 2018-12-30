@@ -74,6 +74,9 @@
     - 4.**utility**(优先级第4高)
     - 5.**background**(优先级最低)
     - 6.**unspecified**&nbsp;(未指定优先级)
+
+    > 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
+    
 代码： global队列指定优先级，分析任务的执行顺序
 #### DispatchGlobalViewController
 ```swift
@@ -114,7 +117,7 @@ utility任务: 当前线程的hash为105553118758848
 background任务: 当前线程的hash为106102874588096
 ```
 - 2.&nbsp;global队列虽能指定任务执行的优先级，但不能保证实时性，因此执行顺序也只能是大致的判断，因此上面的代码执行的结果不一定是userInteractive->userInitiated->default->utility->background
-> 自行创建串行队列和并行队列的优先级与default优先级的global队列相同
+
 
 ### 3.&nbsp;asyncAfter
 
