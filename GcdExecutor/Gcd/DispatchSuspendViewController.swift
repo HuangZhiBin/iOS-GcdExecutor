@@ -104,7 +104,7 @@ class DispatchSuspendViewController: UIViewController {
     var concurrentQueue : DispatchQueue! = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
     
     func executeSync1(){
-        for index in 0...50{
+        for index in 0...5{
             concurrentQueue.async {
                 self.log("\(index)", Thread.current);
                 sleep(2)
@@ -116,7 +116,7 @@ class DispatchSuspendViewController: UIViewController {
     func executeSync2(){
         
         concurrentQueue.suspend()
-        for index in 51...100{
+        for index in 6...10{
             concurrentQueue.async {
                 self.log("\(index)", Thread.current);
                 sleep(2)
