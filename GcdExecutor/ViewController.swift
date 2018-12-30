@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         btn.frame = CGRect.init(x: 10, y: 400-20-60, width: 320, height: 50);
         btn.layer.masksToBounds = true;
         btn.layer.cornerRadius = 3;
-        btn.setTitle("Sync同步", for: .normal);
+        btn.setTitle("Barrier数据一致", for: .normal);
         btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         btn.setTitleColor(UIColor.white, for: .normal);
         btn.backgroundColor = UIColor.blue;

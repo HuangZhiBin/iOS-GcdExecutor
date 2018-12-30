@@ -157,7 +157,7 @@ background任务: 当前线程的hash为106102874588096
 - 2.&nbsp;相同时间间隔内指定DispatchWallTime的任务先于DispatchTime执行
 
 ### 4.&nbsp;DispatchGroup
-
+#### DispatchGroupViewController
 - **DispatchGroup**用于检查队列的所有任务是否执行结束
 ```swift
         let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
@@ -221,7 +221,7 @@ done doing all stuff: 当前线程的hash为105553116718016
 ``` 
 - 检查1秒后队列是否执行结束
 ```swift
-let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
         
         let group = DispatchGroup.init();
         
@@ -252,8 +252,112 @@ let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attribu
 并行队列中同步执行的第1个任务: 当前线程的hash为106102874590080
 并行队列中同步执行的第2个任务: 当前线程的hash为106102874590464
 并行队列中同步执行的第3个任务: 当前线程的hash为105553118757888
-done doing all stuffs after 1 second: 当前线程的hash为105553116718016
+still doing stuffs after 1 second: 当前线程的hash为105553116718016
 ```
+
+### 5.&nbsp;barrier
+#### DispatchBarrierViewController
+- 并行处理数据时，导致数据不一致的情况
+```swift
+        let queue = DispatchQueue.global(qos: .default);
+        var a = "12345";
+        queue.async {
+            self.log("> 1 任务开始执行", Thread.current)
+            self.log("  < 1.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 2 任务开始执行", Thread.current)
+            self.log("  < 2.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 3 任务开始执行", Thread.current)
+            self.log("  < 3.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            a = "54321";
+            self.log("======a的值修改为" + a + "======", Thread.current)
+        }
+        queue.async {
+            self.log("> 4 任务开始执行", Thread.current)
+            self.log("  < 4.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 5 任务开始执行", Thread.current)
+            self.log("  < 5.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 6 任务开始执行", Thread.current)
+            self.log("  < 6.a的值是" + a, Thread.current)
+        }
+```
+执行结果：
+```swift
+> 1 任务开始执行: 当前线程的hash为105553116765696
+  < 1.a的值是12345: 当前线程的hash为105553116765696
+> 2 任务开始执行: 当前线程的hash为106102872585920
+> 3 任务开始执行: 当前线程的hash为106102872577088
+======a的值修改为54321======: 当前线程的hash为105553116765696
+> 4 任务开始执行: 当前线程的hash为105553116763072
+  < 2.a的值是54321: 当前线程的hash为106102872585920
+> 5 任务开始执行: 当前线程的hash为106102872587008
+  < 3.a的值是54321: 当前线程的hash为106102872577088
+> 6 任务开始执行: 当前线程的hash为106102872586624
+  < 4.a的值是54321: 当前线程的hash为105553116763072
+  < 5.a的值是54321: 当前线程的hash为106102872587008
+  < 6.a的值是54321: 当前线程的hash为106102872586624
+```
+    - 从执行结果可以看到，任务2开始后，在任务2结束之前，a的值已经修改为54321，导致任务2在访问变量a时返回的是已经被修改后的值，出现了数据不一致的情况。
+- **barrier**用于解决并行处理数据时，导致数据不一致的情况
+> barrier对global队列无效，只能用于自定义队列
+```swift
+        let queue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        var a = "12345";
+        queue.async {
+            self.log("> 1 任务开始执行", Thread.current)
+            self.log("  < 1.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 2 任务开始执行", Thread.current)
+            self.log("  < 2.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 3 任务开始执行", Thread.current)
+            self.log("  < 3.a的值是" + a, Thread.current)
+        }
+        queue.async(flags: .barrier){
+            a = "54321";
+            self.log("======a的值修改为" + a + "======", Thread.current)
+        }
+        queue.async {
+            self.log("> 4 任务开始执行", Thread.current)
+            self.log("  < 4.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 5 任务开始执行", Thread.current)
+            self.log("  < 5.a的值是" + a, Thread.current)
+        }
+        queue.async {
+            self.log("> 6 任务开始执行", Thread.current)
+            self.log("  < 6.a的值是" + a, Thread.current)
+        }
+```
+执行结果：
+```swift
+> 1 任务开始执行: 当前线程的hash为106102872585920
+> 3 任务开始执行: 当前线程的hash为106102872582400
+> 2 任务开始执行: 当前线程的hash为106102872586752
+  < 1.a的值是12345: 当前线程的hash为106102872585920
+  < 3.a的值是12345: 当前线程的hash为106102872582400
+  < 2.a的值是12345: 当前线程的hash为106102872586752
+======a的值修改为54321======: 当前线程的hash为106102872586752
+> 5 任务开始执行: 当前线程的hash为105553116762112
+> 4 任务开始执行: 当前线程的hash为106102872586752
+> 6 任务开始执行: 当前线程的hash为106102872582400
+  < 5.a的值是54321: 当前线程的hash为105553116762112
+  < 4.a的值是54321: 当前线程的hash为106102872586752
+  < 6.a的值是54321: 当前线程的hash为106102872582400
+```
+- barrier追加到队列后，会等待并行执行的任务全部处理完成，然后才会处理barrier的任务，此时同时间只能执行barrier的任务，barrier的任务处理结束后，才会执行后面的并行执行的任务。保证了在数据修改的操作时，并行操作只有一个。
 
 | Item      | Value |
 | --------- | -----:|

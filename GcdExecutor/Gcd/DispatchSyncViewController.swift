@@ -71,7 +71,7 @@ class DispatchSyncViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Barrier数据一致";
+        self.title = "Sync同步";
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white;
         // Do any additional setup after loading the view.
