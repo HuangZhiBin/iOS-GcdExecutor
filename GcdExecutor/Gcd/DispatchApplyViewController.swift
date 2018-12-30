@@ -61,16 +61,17 @@ class DispatchApplyViewController: UIViewController {
         }
     }
     
-    let globalQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)//DispatchQueue.global(qos: .default);
+    
     
     func executeSync1(){
         
-        globalQueue.async {
+        let concurrentQueue = DispatchQueue(label: "com.dianbo.concurrentQueue", attributes: .concurrent)
+        concurrentQueue.async {
             DispatchQueue.concurrentPerform(iterations: 15) {
                 self.log("\($0)", Thread.current);
                 sleep(1);
             }
-            self.log("DispatchQueue.concurrentPerform done", Thread.current);
+            self.log("concurrentQueue is all work done", Thread.current);
         }
         
         
