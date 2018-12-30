@@ -1,6 +1,6 @@
 # GCD案例分析
 > 以Swift4实现GCD的各种例子
-### 1.&nbsp;串行队列(Serial Dispatch Queue)和并行队列(Concurrent Dispatch Queue)
+### 1.&nbsp;串行队列和并行队列
 - **串行队列**(Serial Dispatch Queue)同时只能执行一个追加的任务(Block)
 - **并行队列**(Concurrent Dispatch Queue)同时执行多个追加的任务(Block)
 - 可自行创建串行队列和并行队列
@@ -63,7 +63,7 @@
 - 3.&nbsp;可以看到执行顺序不定(多次几次),可能是1->2->3，也可能是2->1->3。虽然追加的任务顺序是1->2->3，但在并行队列中，追加的所有任务执行顺序不定。并且不同任务在执行时，所在的线程不为同一个
 > `追加`和`执行`是两个不同的概念，在并行队列中，先追加的任务不代表先执行
 
-### 2.&nbsp;main队列(Main Dispatch Queue)和global队列(Global Dispatch Queue)
+### 2.&nbsp;main队列和global队列
 
 - **main队列**和**global队列**是系统标准提供的队列，即全局队列
 - **main队列**(Main Dispatch Queue)是在主线程RunLoop中执行的队列，属于串行队列
@@ -358,6 +358,43 @@ still doing stuffs after 1 second: 当前线程的hash为105553116718016
   < 6.a的值是54321: 当前线程的hash为106102872582400
 ```
 barrier追加到队列后，会等待并行执行的任务全部处理完成，然后才会处理barrier的任务。此时同时间只能执行barrier的任务，barrier的任务处理结束后，才会执行后面的并行执行的任务。保证了在数据修改的操作时，并行操作只有一个。
+
+### 6.&nbsp;sync同步
+#### DispatchSyncViewController
+- GCD的sync将指定的block同步追加到指定的队列
+```swift
+        let globalQueue = DispatchQueue.global(qos: .default);
+        globalQueue.async {
+            self.log("globalQueue.async", Thread.current);
+        }
+        globalQueue.sync {
+            self.log("globalQueue.sync", Thread.current);
+        }
+```
+执行结果：(建议多次测试)
+```swift
+globalQueue.sync: 当前线程的hash为105553116670464
+globalQueue.async: 当前线程的hash为106102872585920
+```
+从执行结果可以看到，顺序是sync->async,或者是async->sync,虽然async的追加顺序先于sync，但其执行顺序不定，可能先于sync也可能晚于sync。
+- sync同步操作引发“死锁”的情况
+```swift
+        let mainQueue = DispatchQueue.main
+        mainQueue.sync {
+            self.log("main.sync", Thread.current);
+        }
+```
+从执行结果可以看到，程序发生死锁而发生异常。原因在于：main队列在等待sync追加block操作的结束，但是main队列正在执行这些代码，因此sync的block始终无法追加到main队列。
+> main队列属于串行队列，自定义的串行队列追加sync同步操作同样会引发“死锁”
+sync同步操作即使发生在async中，也会因为程序无法继续执行，出现“死锁”：
+```swift
+        let mainQueue = DispatchQueue.main
+        mainQueue.async {
+            mainQueue.sync {
+                self.log("main.sync", Thread.current);
+            }
+        }
+```
 
 | Item      | Value |
 | --------- | -----:|
